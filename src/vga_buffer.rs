@@ -103,7 +103,7 @@ impl Writer {
     fn clear_row(&mut self, row: usize) {
         let blank = ScreenChar {
             ascii_character: b' ',
-            color_code: ColorCode::new(Color::Yellow, Color::Black)
+            color_code: ColorCode::new(Color::Yellow, Color::Black),
         };
 
         for col in 0..BUFFER_WIDTH {

@@ -7,7 +7,6 @@
 use core::panic::PanicInfo;
 use thanatos::println;
 
-
 // TODO: Add a README.md file containing how to build and run the kernel
 
 #[cfg(not(test))]
@@ -32,9 +31,3 @@ pub extern "C" fn _start() {
 
     loop {}
 }
-
-
-
-
-
-
