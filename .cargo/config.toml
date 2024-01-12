@@ -7,3 +7,6 @@ runner = "bootimage runner"
 
 [build]
 target = "x86_64-thanatos.json"
+
+[alias]
+t = "test"
