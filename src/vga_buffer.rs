@@ -165,3 +165,10 @@ fn test_println_output() {
         assert_eq!(char::from(screen_char.ascii_character), c);
     }
 }
+
+// TODO: Add unit tests for:
+//  - printing long lines, multiline, etc.
+//  - Non-ASCII characters
+//  - Colors
+//  - Clearing the screen
+//  - Scrolling
