@@ -5,6 +5,7 @@
 #![reexport_test_harness_main = "test_main"]
 
 use core::panic::PanicInfo;
+
 use thanatos::println;
 
 // TODO: Add a README.md file containing how to build and run the kernel
@@ -26,8 +27,15 @@ fn panic(info: &PanicInfo) -> ! {
 pub extern "C" fn _start() {
     println!("Hello World{}", "!");
 
+    thanatos::init();
+
+    unsafe {
+        *(0xdeadbe00 as *mut u64) = 42;
+    };
+
     #[cfg(test)]
     test_main();
 
+    println!("It did not crash!");
     loop {}
 }
