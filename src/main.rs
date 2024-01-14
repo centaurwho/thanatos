@@ -6,11 +6,9 @@
 
 use core::panic::PanicInfo;
 
-use bootloader::{BootInfo, entry_point};
-use x86_64::structures::paging::Translate;
-use x86_64::VirtAddr;
+use bootloader::{entry_point, BootInfo};
 
-use thanatos::{memory, println};
+use thanatos::println;
 
 // TODO: Add a README.md (build.rs would be even better) file containing how to build and run the kernel
 
@@ -29,30 +27,10 @@ fn panic(info: &PanicInfo) -> ! {
 
 entry_point!(kernel_main);
 
-pub fn kernel_main(boot_info: &'static BootInfo) -> ! {
+pub fn kernel_main(_boot_info: &'static BootInfo) -> ! {
     println!("Hello World{}", "!");
 
     thanatos::init();
-
-    let phys_mem_offset = VirtAddr::new(boot_info.physical_memory_offset);
-    let mapper = unsafe { memory::init(phys_mem_offset) };
-
-    let addresses = [
-        // the identity-mapped vga buffer page
-        0xb8000,
-        // some code page
-        0x201008,
-        // some stack page
-        0x0100_0020_1a10,
-        // virtual address mapped to physical address 0
-        boot_info.physical_memory_offset,
-    ];
-
-    for &address in &addresses {
-        let virt = VirtAddr::new(address);
-        let phys = mapper.translate_addr(virt);
-        println!("{:?} -> {:?}", virt, phys);
-    }
 
     #[cfg(test)]
     test_main();
