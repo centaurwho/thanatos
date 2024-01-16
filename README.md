@@ -39,13 +39,61 @@ The main goal of this project is to learn how to write an operating system. Usin
 
 
 ### Requirements
+- Rust toolchain (cargo, rustc, rustup)
 
-- Rust nightly
-- Cargo
-- QEMU
+Project is written in rust and uses cargo as the build system. Fortunately, you can just install rustup and it will
+take care of everything for you. You can install rustup by following the instructions [here](https://rustup.rs/).
 
+- gcc
+
+The bootloader uses gcc during compilation.
+
+- qemu
+
+I am using qemu to run the kernel. You can install qemu by following the instructions [here](https://www.qemu.org/download/).
+One of the future goals is to make the build steps customizable, so using qemu will be optional.
 
 ### Building
 
-TODO: Add instructions for building the OS
+Make sure you have all the requirements installed before building the project.
+
+Before building the project for the first time, there are some things that need to be configured first:
+
+- Set the rust toolchain to nightly. Run the following command in the project directory:
+
+```bash
+rustup override set nightly
+```
+
+- Install bootimage tool.
+
+```bash
+cargo install bootimage
+```
+
+- Install rust-src component.
+
+```bash
+rustup component add rust-src --toolchain nightly-x86_64-unknown-linux-gnu
+```
+
+- Install llvm-tools-preview component.
+
+```bash
+rustup component add llvm-tools-preview
+```
+
+Now you can build the project by running the following command:
+
+```bash
+cargo build
+```
+
+### Running
+
+You can run the project by running the following command:
+
+```bash
+cargo run
+```
 
