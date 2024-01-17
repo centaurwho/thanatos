@@ -5,13 +5,13 @@
 #![reexport_test_harness_main = "test_main"]
 
 use core::panic::PanicInfo;
-use thanatos::println;
+use thanatos::{hlt_loop, println};
 
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
     test_main();
 
-    loop {}
+    hlt_loop()
 }
 
 #[panic_handler]

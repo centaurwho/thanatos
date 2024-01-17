@@ -4,7 +4,7 @@
 
 use core::panic::PanicInfo;
 use lazy_static::lazy_static;
-use thanatos::{serial_println, QemuExitCode};
+use thanatos::{serial_println, QemuExitCode, hlt_loop};
 use x86_64::structures::idt::{InterruptDescriptorTable, InterruptStackFrame};
 
 #[no_mangle]
@@ -53,5 +53,5 @@ extern "x86-interrupt" fn test_double_fault_handler(
 ) -> ! {
     serial_println!("[ok]");
     thanatos::exit_qemu(QemuExitCode::Success);
-    loop {}
+    hlt_loop()
 }

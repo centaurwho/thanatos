@@ -12,7 +12,7 @@ use bootloader::{entry_point, BootInfo};
 use core::panic::PanicInfo;
 use thanatos::allocator::HEAP_SIZE;
 use thanatos::memory::BootInfoFrameAllocator;
-use thanatos::{allocator, memory};
+use thanatos::{allocator, hlt_loop, memory};
 use x86_64::VirtAddr;
 
 entry_point!(main);
@@ -25,9 +25,7 @@ fn main(boot_info: &'static BootInfo) -> ! {
     allocator::init_heap(&mut frame_allocator, &mut mapper).expect("heap initialization failed");
 
     test_main();
-    loop {
-        x86_64::instructions::hlt();
-    }
+    hlt_loop()
 }
 
 #[panic_handler]
