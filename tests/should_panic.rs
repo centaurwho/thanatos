@@ -5,7 +5,7 @@
 #![reexport_test_harness_main = "test_main"]
 
 use core::panic::PanicInfo;
-use thanatos::{exit_qemu, serial_println, QemuExitCode, hlt_loop};
+use thanatos::{exit_qemu, hlt_loop, serial_println, QemuExitCode};
 
 #[panic_handler]
 fn panic(_info: &PanicInfo) -> ! {
