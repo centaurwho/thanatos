@@ -51,7 +51,7 @@ pub fn kernel_main(boot_info: &'static BootInfo) -> ! {
     println!("Value at: {:p}", heap_value);
 
     let mut vec = Vec::new();
-    for i in 0..10000 {
+    for i in 0..1000 {
         vec.push(i);
     }
     println!("Vec at {:p}", vec.as_slice());
