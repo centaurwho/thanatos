@@ -14,8 +14,8 @@ script:
   - cargo fmt --all -- --check
   - cargo clippy --all-targets --all-features -- -D warnings
   # This is a workaround for no_std and std tests being in the same crate
-  - cd kernel & cargo build
-  - cd kernel & cargo buildcargo test
+  - (cd kernel && cargo build)
+  - (cd kernel && cargo test)
   - cargo audit
 
 addons:
