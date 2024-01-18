@@ -4,26 +4,19 @@ rust:
 
 cache: cargo
 
-before_cache:
-  - cargo install cargo-tarpaulin
-
 before_script:
   - rustup component add rustfmt
   - rustup component add clippy
-  - rustup component add rust-src --toolchain nightly-x86_64-unknown-linux-gnu
-  - rustup component add llvm-tools-preview
   - cargo install bootimage
   - cargo install cargo-audit
 
 script:
   - cargo fmt --all -- --check
   - cargo clippy --all-targets --all-features -- -D warnings
-  - cargo build
-  - cargo test
+  # This is a workaround for no_std and std tests being in the same crate
+  - cd kernel & cargo build
+  - cd kernel & cargo buildcargo test
   - cargo audit
-
-after_success:
-  - cargo tarpaulin --ignore-tests
 
 addons:
   apt:

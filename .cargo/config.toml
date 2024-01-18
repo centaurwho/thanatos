@@ -1,12 +1,2 @@
 [unstable]
-build-std-features = ["compiler-builtins-mem"]
-build-std = ["core", "compiler_builtins", "alloc"]
-
-[target.'cfg(target_os = "none")']
-runner = "bootimage runner"
-
-[build]
-target = "x86_64-thanatos.json"
-
-[alias]
-t = "test"
+bindeps = true

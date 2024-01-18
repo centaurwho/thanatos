@@ -1,24 +1,26 @@
 #![no_std]
 #![no_main]
 #![feature(custom_test_frameworks)]
-#![test_runner(thanatos::test_runner)]
+#![test_runner(kernel::test_runner)]
 #![reexport_test_harness_main = "test_main"]
 
 extern crate alloc;
 
 use alloc::boxed::Box;
 use alloc::vec::Vec;
-use bootloader::{entry_point, BootInfo};
 use core::panic::PanicInfo;
-use thanatos::allocator::HEAP_SIZE;
-use thanatos::memory::BootInfoFrameAllocator;
-use thanatos::{allocator, hlt_loop, memory};
+
+use bootloader::{entry_point, BootInfo};
 use x86_64::VirtAddr;
+
+use kernel::allocator::HEAP_SIZE;
+use kernel::memory::BootInfoFrameAllocator;
+use kernel::{allocator, hlt_loop, memory};
 
 entry_point!(main);
 
 fn main(boot_info: &'static BootInfo) -> ! {
-    thanatos::init();
+    kernel::init();
     let phys_mem_offset = VirtAddr::new(boot_info.physical_memory_offset);
     let mut mapper = unsafe { memory::init(phys_mem_offset) };
     let mut frame_allocator = unsafe { BootInfoFrameAllocator::init(&boot_info.memory_map) };
@@ -30,7 +32,7 @@ fn main(boot_info: &'static BootInfo) -> ! {
 
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
-    thanatos::test_panic_handler(info)
+    kernel::test_panic_handler(info)
 }
 
 #[test_case]

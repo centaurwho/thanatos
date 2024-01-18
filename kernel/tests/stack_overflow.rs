@@ -3,15 +3,15 @@
 #![no_main]
 
 use core::panic::PanicInfo;
+use kernel::{hlt_loop, serial_println, QemuExitCode};
 use lazy_static::lazy_static;
-use thanatos::{hlt_loop, serial_println, QemuExitCode};
 use x86_64::structures::idt::{InterruptDescriptorTable, InterruptStackFrame};
 
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
     serial_println!("stack_overflow::stack_overflow...\t");
 
-    thanatos::gdt::init();
+    kernel::gdt::init();
     init_test_idt();
 
     stack_overflow();
@@ -27,7 +27,7 @@ fn stack_overflow() {
 
 #[panic_handler]
 fn panic(_info: &PanicInfo) -> ! {
-    thanatos::test_panic_handler(_info)
+    kernel::test_panic_handler(_info)
 }
 
 lazy_static! {
@@ -36,7 +36,7 @@ lazy_static! {
         unsafe {
             idt.double_fault
                 .set_handler_fn(test_double_fault_handler)
-                .set_stack_index(thanatos::gdt::DOUBLE_FAULT_IST_INDEX);
+                .set_stack_index(kernel::gdt::DOUBLE_FAULT_IST_INDEX);
         }
 
         idt
@@ -52,6 +52,6 @@ extern "x86-interrupt" fn test_double_fault_handler(
     _error_code: u64,
 ) -> ! {
     serial_println!("[ok]");
-    thanatos::exit_qemu(QemuExitCode::Success);
+    kernel::exit_qemu(QemuExitCode::Success);
     hlt_loop()
 }

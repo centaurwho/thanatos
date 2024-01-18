@@ -3,31 +3,12 @@ name = "thanatos"
 version = "0.1.0"
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
-[package.metadata.bootimage]
-test-args = [
-    "-device", "isa-debug-exit,iobase=0xf4,iosize=0x04",
-    "-serial", "stdio",
-    "-display", "none",
+[workspace]
+members = [
+    "kernel",
 ]
-test-success-exit-code = 33 # (0x10 << 1) | 1
 
 [dependencies]
-bootloader = { version = "0.9.23", features = ["map_physical_memory"] } # TODO: Update to 0.11 or write our own bootloader
-volatile = "0.2.6" # TODO: This is an old version but apparently newer versions don't work?
-lazy_static = { version = "1.4.0", features = ["spin_no_std"] }
-spin = "0.9.8"
-x86_64 = "0.14.11"
-uart_16550 = "0.3.0"
-pic8259 = "0.10.4" # TODO: Use APIC in the future
-pc-keyboard = "0.7.0"
-linked_list_allocator = "0.10.5"
 
-[[test]]
-name = "should_panic"
-harness = false
-
-[[test]]
-name = "stack_overflow"
-harness = false
+[build-dependencies]
+kernel = { path = "kernel", artifact = "bin", target = "x86_64-unknown-none" }
