@@ -3,13 +3,15 @@
 #![no_main]
 
 use core::panic::PanicInfo;
-use kernel::{hlt_loop, serial_println, QemuExitCode};
+
 use lazy_static::lazy_static;
 use x86_64::structures::idt::{InterruptDescriptorTable, InterruptStackFrame};
 
+use kernel::{hlt_loop, QemuExitCode, serial_print, serial_println};
+
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
-    serial_println!("stack_overflow::stack_overflow...\t");
+    serial_print!("stack_overflow::stack_overflow...\t");
 
     kernel::gdt::init();
     init_test_idt();

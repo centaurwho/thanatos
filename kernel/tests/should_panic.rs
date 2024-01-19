@@ -5,7 +5,8 @@
 #![reexport_test_harness_main = "test_main"]
 
 use core::panic::PanicInfo;
-use kernel::{exit_qemu, hlt_loop, serial_println, QemuExitCode};
+
+use kernel::{exit_qemu, hlt_loop, QemuExitCode, serial_print, serial_println};
 
 #[panic_handler]
 fn panic(_info: &PanicInfo) -> ! {
@@ -23,6 +24,6 @@ pub extern "C" fn _start() -> ! {
 }
 
 fn should_fail() {
-    serial_println!("should_panic::should_fail... ");
+    serial_print!("should_panic::should_fail... ");
     assert_eq!(0, 1);
 }
