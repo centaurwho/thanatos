@@ -18,6 +18,9 @@ clean:
 run: $(iso)
 	@qemu-system-x86_64 -cdrom $(iso)
 
+make debug: $(iso)
+	@qemu-system-x86_64 -cdrom $(iso) -monitor stdio
+
 iso: $(iso)
 
 $(iso): $(kernel) $(grub_cfg)
