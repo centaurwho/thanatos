@@ -6,7 +6,7 @@
 
 use core::panic::PanicInfo;
 
-use kernel::{exit_qemu, hlt_loop, QemuExitCode, serial_print, serial_println};
+use kernel::{exit_qemu, hlt_loop, serial_print, serial_println, QemuExitCode};
 
 #[panic_handler]
 fn panic(_info: &PanicInfo) -> ! {
